@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Amina Siddiqua — Technical Writing & Documentation</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --ink: #0f0e0c;
+    --paper: #f5f0e8;
+    --accent: #c0392b;
+    --muted: #7a7268;
+    --rule: #d4cec4;
+    --code-bg: #1a1a18;
+    --code-fg: #e8e0d0;
+    --highlight: #f0e6d0;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE TEXTURE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.6;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.2rem 4rem;
+    background: rgba(245, 240, 232, 0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--rule);
+    z-index: 100;
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    letter-spacing: 0.02em;
+  }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-top: 80px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-left {
+    padding: 8rem 4rem 4rem 4rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .hero-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.6s 0.2s forwards;
+  }
+  h1.name {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 5vw, 5.5rem);
+    line-height: 1.05;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.5rem;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.35s forwards;
+  }
+  h1.name em {
+    font-style: italic;
+    color: var(--accent);
+  }
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1rem, 1.5vw, 1.25rem);
+    font-style: italic;
+    color: var(--muted);
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.5s forwards;
+  }
+  .hero-desc {
+    font-size: 1rem;
+    color: #4a4740;
+    max-width: 42ch;
+    margin-bottom: 2.5rem;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.65s forwards;
+  }
+  .hero-ctas {
+    display: flex; gap: 1rem; flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.8s forwards;
+  }
+  .btn-primary {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 0.75rem 1.8rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 1px solid var(--ink);
+    transition: all 0.25s;
+  }
+  .btn-primary:hover { background: var(--accent); border-color: var(--accent); }
+  .btn-outline {
+    background: transparent;
+    color: var(--ink);
+    padding: 0.75rem 1.8rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 1px solid var(--ink);
+    transition: all 0.25s;
+  }
+  .btn-outline:hover { background: var(--ink); color: var(--paper); }
+
+  .hero-right {
+    background: var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-right::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 30px,
+      rgba(255,255,255,0.03) 30px,
+      rgba(255,255,255,0.03) 31px
+    );
+  }
+  .hero-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    width: 80%;
+    position: relative;
+    z-index: 2;
+    opacity: 0;
+    animation: fadeIn 1s 1s forwards;
+  }
+  .stat-box {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    padding: 2rem 1.5rem;
+    transition: background 0.25s;
+  }
+  .stat-box:hover { background: rgba(192, 57, 43, 0.15); }
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.8rem;
+    color: #fff;
+    line-height: 1;
+    margin-bottom: 0.4rem;
+  }
+  .stat-num span { color: var(--accent); }
+  .stat-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+  }
+
+  /* ── SECTION STYLES ── */
+  section { padding: 6rem 4rem; }
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 1.5rem;
+    margin-bottom: 4rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .section-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+  }
+  h2.section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 3vw, 2.8rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  /* ── ABOUT ── */
+  #about { background: #fff; }
+  .about-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 5rem;
+    align-items: start;
+  }
+  .about-text p { margin-bottom: 1.2rem; color: #3a3830; font-size: 1.05rem; }
+  .about-text strong { color: var(--accent); font-weight: 500; }
+  .about-sidebar h3 {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .tools-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 2.5rem;
+  }
+  .tool-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    padding: 0.3rem 0.7rem;
+    background: var(--highlight);
+    border: 1px solid var(--rule);
+    color: var(--ink);
+    letter-spacing: 0.05em;
+  }
+  .cert-item {
+    padding: 0.8rem 0;
+    border-bottom: 1px solid var(--rule);
+    font-size: 0.85rem;
+    color: #4a4740;
+  }
+  .cert-item strong { display: block; color: var(--ink); margin-bottom: 0.2rem; }
+
+  /* ── WORK SAMPLES ── */
+  #samples { background: var(--paper); }
+  .samples-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+  }
+  .sample-card {
+    background: #fff;
+    border: 1px solid var(--rule);
+    cursor: pointer;
+    transition: all 0.3s;
+    overflow: hidden;
+    position: relative;
+  }
+  .sample-card:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,0,0,0.08); }
+  .sample-card.featured { grid-column: 1 / -1; }
+  .card-header {
+    padding: 2rem 2rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+  .card-type {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: rgba(192,57,43,0.08);
+    padding: 0.25rem 0.6rem;
+  }
+  .card-arrow { font-size: 1.2rem; color: var(--rule); transition: color 0.2s; }
+  .sample-card:hover .card-arrow { color: var(--accent); }
+  .card-body { padding: 0 2rem 2rem; }
+  h3.card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.35rem;
+    margin-bottom: 0.6rem;
+    line-height: 1.3;
+  }
+  .card-desc { font-size: 0.9rem; color: var(--muted); margin-bottom: 1.2rem; }
+  .card-preview {
+    background: var(--code-bg);
+    padding: 1.2rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--code-fg);
+    line-height: 1.8;
+    overflow: hidden;
+    max-height: 160px;
+    position: relative;
+  }
+  .card-preview::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 40px;
+    background: linear-gradient(transparent, var(--code-bg));
+  }
+  .card-preview .kw { color: #ff7b72; }
+  .card-preview .str { color: #a5d6ff; }
+  .card-preview .comment { color: #6e7681; }
+  .card-preview .prop { color: #79c0ff; }
+  .card-preview .val { color: #f0a050; }
+
+  /* Modal */
+  .modal-overlay {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(15,14,12,0.85);
+    z-index: 500;
+    overflow-y: auto;
+    padding: 2rem;
+  }
+  .modal-overlay.open { display: flex; align-items: flex-start; justify-content: center; }
+  .modal {
+    background: var(--paper);
+    max-width: 800px;
+    width: 100%;
+    margin: auto;
+    border: 1px solid var(--rule);
+    position: relative;
+  }
+  .modal-close {
+    position: absolute; top: 1.5rem; right: 1.5rem;
+    background: none; border: none; cursor: pointer;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .modal-close:hover { color: var(--accent); }
+  .modal-top {
+    padding: 3rem 3rem 2rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .modal-type {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.8rem;
+  }
+  .modal h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    margin-bottom: 0.8rem;
+  }
+  .modal-desc { color: var(--muted); font-size: 0.95rem; }
+  .modal-body { padding: 2rem 3rem 3rem; }
+  .modal-body h4 {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 1.8rem 0 0.8rem;
+  }
+  .modal-body h4:first-child { margin-top: 0; }
+  .modal-body p { color: #3a3830; font-size: 0.95rem; margin-bottom: 0.8rem; }
+  .modal-body ul { padding-left: 1.2rem; color: #3a3830; font-size: 0.95rem; }
+  .modal-body ul li { margin-bottom: 0.4rem; }
+  .doc-block {
+    background: #fff;
+    border: 1px solid var(--rule);
+    padding: 1.5rem;
+    font-size: 0.88rem;
+    line-height: 1.8;
+    margin: 0.8rem 0;
+  }
+  .doc-block h5 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    margin-bottom: 0.8rem;
+  }
+  .doc-block code {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.8rem;
+    background: var(--highlight);
+    padding: 0.1rem 0.4rem;
+    border: 1px solid var(--rule);
+  }
+  .api-block {
+    background: var(--code-bg);
+    padding: 1.5rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--code-fg);
+    line-height: 1.9;
+    overflow-x: auto;
+    margin: 0.8rem 0;
+  }
+  .api-block .kw { color: #ff7b72; }
+  .api-block .str { color: #a5d6ff; }
+  .api-block .prop { color: #79c0ff; }
+  .api-block .val { color: #f0a050; }
+  .api-block .comment { color: #6e7681; }
+  .tag-row { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.8rem; }
+  .tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    padding: 0.2rem 0.6rem;
+    background: var(--highlight);
+    border: 1px solid var(--rule);
+    color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+
+  /* ── EXPERIENCE TIMELINE ── */
+  #experience { background: #fff; }
+  .timeline { position: relative; padding-left: 2rem; }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 1px;
+    background: var(--rule);
+  }
+  .timeline-item {
+    position: relative;
+    padding: 0 0 3rem 2rem;
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: all 0.5s;
+  }
+  .timeline-item.visible { opacity: 1; transform: translateX(0); }
+  .timeline-dot {
+    position: absolute;
+    left: -2.4rem;
+    top: 0.4rem;
+    width: 10px; height: 10px;
+    background: var(--accent);
+    border: 2px solid var(--paper);
+    outline: 1px solid var(--accent);
+  }
+  .timeline-meta {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.5rem;
+  }
+  .timeline-role {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    margin-bottom: 0.3rem;
+  }
+  .timeline-company { color: var(--accent); font-size: 0.9rem; margin-bottom: 0.8rem; }
+  .timeline-desc { font-size: 0.9rem; color: #4a4740; max-width: 60ch; }
+
+  /* ── CONTACT ── */
+  #contact { background: var(--ink); color: var(--paper); }
+  #contact .section-title { color: var(--paper); }
+  #contact .section-num { color: var(--accent); }
+  #contact .section-header { border-color: rgba(255,255,255,0.1); }
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+  .contact-intro { font-size: 1.05rem; color: rgba(245,240,232,0.7); line-height: 1.8; }
+  .contact-details { display: flex; flex-direction: column; gap: 1.2rem; }
+  .contact-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    padding: 1.2rem 1.5rem;
+    border: 1px solid rgba(255,255,255,0.1);
+    transition: border-color 0.2s;
+  }
+  .contact-item:hover { border-color: var(--accent); }
+  .contact-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .contact-value { font-size: 0.95rem; color: rgba(245,240,232,0.85); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--ink);
+    padding: 2rem 4rem;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  footer p {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    color: rgba(255,255,255,0.25);
+    letter-spacing: 0.08em;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { padding: 1rem 2rem; }
+    .nav-links { gap: 1.5rem; }
+    #hero { grid-template-columns: 1fr; min-height: auto; }
+    .hero-left { padding: 7rem 2rem 3rem; }
+    .hero-right { min-height: 300px; }
+    section { padding: 4rem 2rem; }
+    .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .samples-grid { grid-template-columns: 1fr; }
+    .sample-card.featured { grid-column: 1; }
+    footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Amina Siddiqua</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#samples">Work Samples</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-left">
+    <p class="hero-tag">Technical Writing &amp; Documentation</p>
+    <h1 class="name">Amina<br/><em>Siddiqua</em></h1>
+    <p class="hero-title">Documentation Manager · API Writer · Cross-Functional Leader</p>
+    <p class="hero-desc">12+ years turning complex systems into clear, authoritative documentation. From API reference guides to enterprise onboarding — I make the technical accessible.</p>
+    <div class="hero-ctas">
+      <a href="#samples" class="btn-primary">View Work Samples</a>
+      <a href="#contact" class="btn-outline">Get in Touch</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-stats">
+      <div class="stat-box">
+        <div class="stat-num">12<span>+</span></div>
+        <div class="stat-label">Years Experience</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">3<span>×</span></div>
+        <div class="stat-label">Employee of Quarter</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">ISO</div>
+        <div class="stat-label">9001 &amp; 27001 Docs</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">CTFL</div>
+        <div class="stat-label">ISTQB Certified</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-header">
+    <span class="section-num">01</span>
+    <h2 class="section-title">About</h2>
+  </div>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>I'm a <strong>Documentation & Technical Writing Manager</strong> based in Islamabad, Pakistan, with over a decade of experience at Komatsu Pakistan Soft. My work sits at the intersection of engineering depth and communication clarity.</p>
+      <p>I lead a team of technical writers, architect documentation frameworks, and build the systems that keep documentation aligned with fast-moving product development. I hold an <strong>MS in Computer Science</strong> and an ISTQB certification, which means I can read code, validate APIs in Postman, and translate that understanding directly into developer-facing documentation.</p>
+      <p>My speciality is making the difficult feel obvious — whether that's an API integration guide for developers, an onboarding walkthrough for enterprise users, or compliance documentation for ISO audits.</p>
+    </div>
+    <div class="about-sidebar">
+      <h3>Core Tools</h3>
+      <div class="tools-list">
+        <span class="tool-tag">Confluence</span>
+        <span class="tool-tag">Document360</span>
+        <span class="tool-tag">Postman</span>
+        <span class="tool-tag">Pendo</span>
+        <span class="tool-tag">Figma</span>
+        <span class="tool-tag">Draw.io</span>
+        <span class="tool-tag">Azure DevOps</span>
+        <span class="tool-tag">VYOND</span>
+        <span class="tool-tag">UserGuiding</span>
+        <span class="tool-tag">Guidde</span>
+        <span class="tool-tag">Jira</span>
+        <span class="tool-tag">VYOND</span>
+      </div>
+      <h3>Certifications</h3>
+      <div class="cert-item">
+        <strong>ISTQB CTFL</strong>License No: 21-CTFL-0439PK
+      </div>
+      <div class="cert-item">
+        <strong>Technical Writing: Software Documentation</strong>JPDocu School
+      </div>
+      <div class="cert-item">
+        <strong>API Documentation with JSON &amp; XML</strong>LinkedIn Learning
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WORK SAMPLES -->
+<section id="samples">
+  <div class="section-header">
+    <span class="section-num">02</span>
+    <h2 class="section-title">Work Samples</h2>
+  </div>
+  <div class="samples-grid">
+
+    <!-- Sample 1: API Docs (featured) -->
+    <div class="sample-card featured" onclick="openModal('modal-api')">
+      <div class="card-header">
+        <span class="card-type">API Reference Documentation</span>
+        <span class="card-arrow">→</span>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">REST API Authentication Guide</h3>
+        <p class="card-desc">A sample endpoint reference and integration guide written for a developer audience — including authentication flows, request/response structures, and error handling.</p>
+        <div class="card-preview">
+<span class="comment">## POST /auth/token</span>
+<span class="prop">Description:</span> <span class="str">Exchange credentials for a bearer token.</span>
+<span class="prop">Auth Required:</span> <span class="val">No</span>
+
+<span class="comment">### Request Body (application/json)</span>
+{
+  <span class="prop">"client_id"</span>: <span class="str">"&lt;your_client_id&gt;"</span>,
+  <span class="prop">"client_secret"</span>: <span class="str">"&lt;your_secret&gt;"</span>,
+  <span class="prop">"grant_type"</span>: <span class="str">"client_credentials"</span>
+}
+        </div>
+        <div class="tag-row">
+          <span class="tag">REST API</span>
+          <span class="tag">Developer Docs</span>
+          <span class="tag">Postman-validated</span>
+          <span class="tag">JSON</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sample 2: User Guide -->
+    <div class="sample-card" onclick="openModal('modal-guide')">
+      <div class="card-header">
+        <span class="card-type">User Guide</span>
+        <span class="card-arrow">→</span>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">Feature Onboarding Guide</h3>
+        <p class="card-desc">Step-by-step guide introducing a new feature to enterprise end-users, with callouts, UI references, and troubleshooting tips.</p>
+        <div class="card-preview">
+<span class="comment"># Getting Started with Dashboard Filters</span>
+
+<span class="kw">Overview</span>
+Dashboard Filters let you narrow data views by date,
+team, or project. This guide walks you through
+setting up your first filter in under 3 minutes.
+
+<span class="kw">Prerequisites</span>
+- Account with Dashboard access (Admin or Analyst role)
+- At least one active Project in your workspace
+        </div>
+        <div class="tag-row">
+          <span class="tag">End-user Docs</span>
+          <span class="tag">Enterprise Software</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sample 3: Release Notes -->
+    <div class="sample-card" onclick="openModal('modal-release')">
+      <div class="card-header">
+        <span class="card-type">Release Notes</span>
+        <span class="card-arrow">→</span>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">Product Release Notes — v3.4.0</h3>
+        <p class="card-desc">Structured release notes covering new features, improvements, bug fixes, and deprecations — written for both technical and non-technical readers.</p>
+        <div class="card-preview">
+<span class="kw">Release:</span> v3.4.0 | <span class="val">March 2025</span>
+<span class="kw">Status:</span> <span class="str">Generally Available</span>
+
+<span class="comment">### New Features</span>
+- <span class="prop">Bulk Export API</span>: Export up to 10,000 records
+  via <span class="str">/v2/export/bulk</span> with async job support.
+
+<span class="comment">### Bug Fixes</span>
+- Resolved token expiry edge case on parallel requests
+        </div>
+        <div class="tag-row">
+          <span class="tag">Release Notes</span>
+          <span class="tag">Versioned Docs</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sample 4: Doc Framework -->
+    <div class="sample-card" onclick="openModal('modal-framework')">
+      <div class="card-header">
+        <span class="card-type">Documentation Strategy</span>
+        <span class="card-arrow">→</span>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">Documentation Framework Design</h3>
+        <p class="card-desc">A sample documentation framework showing content taxonomy, naming conventions, review cycles, and version control standards for a mid-size engineering org.</p>
+        <div class="card-preview">
+<span class="comment">## Content Taxonomy (Top-Level)</span>
+<span class="prop">├─</span> <span class="str">getting-started/</span>
+<span class="prop">├─</span> <span class="str">api-reference/</span>
+<span class="prop">│   ├─</span> <span class="val">authentication</span>
+<span class="prop">│   ├─</span> <span class="val">endpoints</span>
+<span class="prop">│   └─</span> <span class="val">error-codes</span>
+<span class="prop">├─</span> <span class="str">user-guides/</span>
+<span class="prop">└─</span> <span class="str">release-notes/</span>
+        </div>
+        <div class="tag-row">
+          <span class="tag">Content Strategy</span>
+          <span class="tag">IA</span>
+          <span class="tag">Leadership</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-header">
+    <span class="section-num">03</span>
+    <h2 class="section-title">Experience</h2>
+  </div>
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-meta">Oct 2019 – Present</div>
+      <div class="timeline-role">Assistant Manager, Technical Documentation</div>
+      <div class="timeline-company">Komatsu Pakistan Soft (Pvt.) Ltd</div>
+      <div class="timeline-desc">Leading a team of technical writers, architecting documentation frameworks, producing API reference guides and enterprise product documentation. Proactive release-cycle planning and cross-functional collaboration with engineering, UI/UX, and QA.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-meta">Oct 2015 – Sep 2019</div>
+      <div class="timeline-role">Senior Technical Document Writer</div>
+      <div class="timeline-company">Komatsu Pakistan Soft (Pvt.) Ltd</div>
+      <div class="timeline-desc">Developed test cases, software documentation, and training materials. Created SRS documents, UI/UX designs, and technical specifications. Designed screen mock-ups and marketing collateral.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-meta">Feb 2013 – Sep 2015</div>
+      <div class="timeline-role">Technical Document Writer</div>
+      <div class="timeline-company">Komatsu Pakistan Soft (Pvt.) Ltd</div>
+      <div class="timeline-desc">Created user guides, manuals, and technical documentation for enterprise applications. Conducted test case documentation and UI element design.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-meta">May 2011 – Jan 2013</div>
+      <div class="timeline-role">System Analyst &amp; Technical Writer</div>
+      <div class="timeline-company">CyberVision International</div>
+      <div class="timeline-desc">Gathered and analysed project requirements, designed SRS documents, created user manuals, and designed brochures and marketing materials for software products.</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-header">
+    <span class="section-num">04</span>
+    <h2 class="section-title">Contact</h2>
+  </div>
+  <div class="contact-grid">
+    <div class="contact-intro">
+      <p>I'm open to senior technical writing roles, documentation leadership positions, and consulting engagements. If you're looking for someone who can own documentation end-to-end — from strategy to delivery — let's talk.</p>
+    </div>
+    <div class="contact-details">
+      <div class="contact-item">
+        <span class="contact-label">Email</span>
+        <span class="contact-value">aminasiddiqua18@gmail.com</span>
+      </div>
+      <div class="contact-item">
+        <span class="contact-label">Phone</span>
+        <span class="contact-value">+92-333-5287260</span>
+      </div>
+      <div class="contact-item">
+        <span class="contact-label">Location</span>
+        <span class="contact-value">Islamabad, Pakistan</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2025 Amina Siddiqua</p>
+  <p>Technical Writing & Documentation Manager</p>
+</footer>
+
+<!-- ══════════════ MODALS ══════════════ -->
+
+<!-- Modal: API Docs -->
+<div class="modal-overlay" id="modal-api">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('modal-api')">✕ Close</button>
+    <div class="modal-top">
+      <div class="modal-type">Work Sample · API Reference Documentation</div>
+      <h2>REST API Authentication Guide</h2>
+      <p class="modal-desc">Sample developer documentation for an authentication API endpoint, written and validated using Postman. Demonstrates my approach to API reference writing for developer audiences.</p>
+    </div>
+    <div class="modal-body">
+      <h4>Context</h4>
+      <p>This sample represents the type of API documentation I produce at Komatsu Pakistan Soft — endpoint references with full request/response structures, authentication flows, and error handling, validated through Postman before publication.</p>
+
+      <h4>POST /auth/token</h4>
+      <div class="doc-block">
+        <h5>Overview</h5>
+        <p>Exchanges client credentials for a short-lived bearer token. Use this token in the <code>Authorization</code> header for all subsequent API requests.</p>
+        <p><strong>Authentication required:</strong> No &nbsp;|&nbsp; <strong>Rate limit:</strong> 10 requests/minute per client</p>
+      </div>
+
+      <h4>Request</h4>
+      <div class="api-block">
+<span class="kw">POST</span> /auth/token
+<span class="prop">Content-Type:</span> <span class="str">application/json</span>
+
+{
+  <span class="prop">"client_id"</span>: <span class="str">"abc123"</span>,
+  <span class="prop">"client_secret"</span>: <span class="str">"s3cr3t_value"</span>,
+  <span class="prop">"grant_type"</span>: <span class="str">"client_credentials"</span>
+}
+      </div>
+
+      <h4>Successful Response — 200 OK</h4>
+      <div class="api-block">
+{
+  <span class="prop">"access_token"</span>: <span class="str">"eyJhbGciOiJSUzI1NiIsInR..."</span>,
+  <span class="prop">"token_type"</span>: <span class="str">"Bearer"</span>,
+  <span class="prop">"expires_in"</span>: <span class="val">3600</span>,   <span class="comment">// seconds</span>
+  <span class="prop">"scope"</span>: <span class="str">"read write"</span>
+}
+      </div>
+
+      <h4>Error Responses</h4>
+      <div class="api-block">
+<span class="comment">// 401 Unauthorized — invalid credentials</span>
+{
+  <span class="prop">"error"</span>: <span class="str">"invalid_client"</span>,
+  <span class="prop">"error_description"</span>: <span class="str">"Client authentication failed."</span>
+}
+
+<span class="comment">// 429 Too Many Requests</span>
+{
+  <span class="prop">"error"</span>: <span class="str">"rate_limit_exceeded"</span>,
+  <span class="prop">"retry_after"</span>: <span class="val">60</span>
+}
+      </div>
+
+      <h4>Notes</h4>
+      <ul>
+        <li>Tokens expire after 3600 seconds. Implement token refresh logic before expiry.</li>
+        <li>Store <code>client_secret</code> server-side only — never expose in client-side code.</li>
+        <li>All API requests must include <code>Authorization: Bearer &lt;access_token&gt;</code>.</li>
+      </ul>
+      <div class="tag-row" style="margin-top:1.5rem">
+        <span class="tag">REST API</span><span class="tag">OAuth 2.0</span><span class="tag">JSON</span><span class="tag">Postman-validated</span><span class="tag">Developer Docs</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: User Guide -->
+<div class="modal-overlay" id="modal-guide">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('modal-guide')">✕ Close</button>
+    <div class="modal-top">
+      <div class="modal-type">Work Sample · End-User Documentation</div>
+      <h2>Feature Onboarding Guide: Dashboard Filters</h2>
+      <p class="modal-desc">Sample user guide for an enterprise software feature, demonstrating my ability to write clear, step-by-step documentation for non-technical audiences.</p>
+    </div>
+    <div class="modal-body">
+      <h4>Context</h4>
+      <p>This sample reflects the user guides I create for enterprise product launches — combining feature walkthroughs, UI callouts, and troubleshooting advice into a single accessible document.</p>
+
+      <div class="doc-block">
+        <h5>Getting Started with Dashboard Filters</h5>
+        <p><strong>Version:</strong> 3.4 &nbsp;|&nbsp; <strong>Audience:</strong> Analyst, Admin roles &nbsp;|&nbsp; <strong>Time to complete:</strong> ~3 minutes</p>
+        <br/>
+        <p><strong>Overview</strong><br/>Dashboard Filters let you narrow any data view by date range, team, or project. Once configured, filters persist across sessions, so your preferred view is always ready when you log in.</p>
+        <br/>
+        <p><strong>Prerequisites</strong></p>
+        <ul style="padding-left:1.2rem; margin-bottom:1rem;">
+          <li>Account with Dashboard access (Admin or Analyst role)</li>
+          <li>At least one active Project in your workspace</li>
+        </ul>
+        <p><strong>Step 1: Open the Filters Panel</strong><br/>From the main Dashboard, click the <code>Filters</code> icon (⊞) in the top-right toolbar. The Filters panel slides in from the right.</p>
+        <br/>
+        <p><strong>Step 2: Select a Date Range</strong><br/>Under <em>Date Range</em>, choose a preset (Last 7 days, Last 30 days, This quarter) or click <em>Custom</em> to define start and end dates.</p>
+        <br/>
+        <p><strong>Step 3: Apply and Save</strong><br/>Click <code>Apply Filters</code>. To save this filter as your default view, toggle <em>Save as default</em> before applying.</p>
+        <br/>
+        <p>💡 <strong>Tip:</strong> Filters stack — you can combine Date Range + Team + Project for a highly targeted view.</p>
+      </div>
+
+      <h4>Troubleshooting</h4>
+      <div class="doc-block">
+        <p><strong>Filters not persisting after log-out?</strong><br/>Ensure you toggled <em>Save as default</em> before applying. Guest accounts cannot save filter preferences.</p>
+        <br/>
+        <p><strong>No projects appearing in the Project filter?</strong><br/>You need at least Viewer access on a Project for it to appear. Contact your workspace Admin to request access.</p>
+      </div>
+      <div class="tag-row" style="margin-top:1.5rem">
+        <span class="tag">User Guide</span><span class="tag">Enterprise Software</span><span class="tag">Onboarding</span><span class="tag">Feature Docs</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Release Notes -->
+<div class="modal-overlay" id="modal-release">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('modal-release')">✕ Close</button>
+    <div class="modal-top">
+      <div class="modal-type">Work Sample · Release Notes</div>
+      <h2>Product Release Notes — v3.4.0</h2>
+      <p class="modal-desc">Sample release notes structured for both technical (developers) and non-technical (business users) audiences, covering new features, bug fixes, and deprecations.</p>
+    </div>
+    <div class="modal-body">
+      <h4>Context</h4>
+      <p>Release notes are a key part of the documentation packages I deliver with every product release — timed to coincide with deployment and written to serve multiple reader types in one document.</p>
+      <div class="doc-block">
+        <h5>Release Notes — v3.4.0</h5>
+        <p><strong>Release date:</strong> March 2025 &nbsp;|&nbsp; <strong>Status:</strong> Generally Available</p>
+        <br/>
+        <p><strong>🆕 New Features</strong></p>
+        <ul style="padding-left:1.2rem; margin:0.5rem 0 1rem;">
+          <li><strong>Bulk Export API</strong> — Export up to 10,000 records via the new <code>/v2/export/bulk</code> endpoint. Exports run as async jobs; poll <code>/v2/jobs/{job_id}</code> for status.</li>
+          <li><strong>Custom Webhook Payloads</strong> — Configure the shape of webhook payloads per event type from <em>Settings → Webhooks</em>.</li>
+          <li><strong>Dark Mode (Beta)</strong> — Available opt-in from <em>Profile → Appearance</em>. Feedback welcome.</li>
+        </ul>
+        <p><strong>⚡ Improvements</strong></p>
+        <ul style="padding-left:1.2rem; margin:0.5rem 0 1rem;">
+          <li>Dashboard load time reduced by ~40% for workspaces with 500+ projects.</li>
+          <li>Filter panel now supports keyboard navigation (Tab, Enter, Esc).</li>
+        </ul>
+        <p><strong>🐛 Bug Fixes</strong></p>
+        <ul style="padding-left:1.2rem; margin:0.5rem 0 1rem;">
+          <li>Resolved token expiry edge case causing silent failures on parallel API requests.</li>
+          <li>Fixed date picker overflow on small viewports in Firefox.</li>
+        </ul>
+        <p><strong>⚠️ Deprecations</strong></p>
+        <ul style="padding-left:1.2rem; margin:0.5rem 0;">
+          <li><code>/v1/export</code> is deprecated and will be removed in v4.0. Migrate to <code>/v2/export/bulk</code>.</li>
+        </ul>
+      </div>
+      <div class="tag-row" style="margin-top:1.5rem">
+        <span class="tag">Release Notes</span><span class="tag">Versioned Docs</span><span class="tag">API</span><span class="tag">Product Writing</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Framework -->
+<div class="modal-overlay" id="modal-framework">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('modal-framework')">✕ Close</button>
+    <div class="modal-top">
+      <div class="modal-type">Work Sample · Documentation Strategy</div>
+      <h2>Documentation Framework Design</h2>
+      <p class="modal-desc">A sample documentation framework covering content taxonomy, naming conventions, review cycles, and version control — the kind of foundational work I do as a documentation leader.</p>
+    </div>
+    <div class="modal-body">
+      <h4>Context</h4>
+      <p>This sample reflects the documentation architecture work I did at Komatsu Pakistan Soft — building the frameworks, standards, and processes that allow a documentation team to scale consistently.</p>
+
+      <h4>Content Taxonomy</h4>
+      <div class="api-block">
+docs/
+<span class="prop">├─</span> <span class="str">getting-started/</span>
+<span class="prop">│   ├─</span> <span class="val">quickstart.md</span>
+<span class="prop">│   └─</span> <span class="val">installation.md</span>
+<span class="prop">├─</span> <span class="str">api-reference/</span>
+<span class="prop">│   ├─</span> <span class="val">authentication/</span>
+<span class="prop">│   ├─</span> <span class="val">endpoints/</span>
+<span class="prop">│   └─</span> <span class="val">error-codes.md</span>
+<span class="prop">├─</span> <span class="str">user-guides/</span>
+<span class="prop">│   ├─</span> <span class="val">features/</span>
+<span class="prop">│   └─</span> <span class="val">integrations/</span>
+<span class="prop">├─</span> <span class="str">release-notes/</span>
+<span class="prop">└─</span> <span class="str">compliance/</span>
+    <span class="val">iso-9001/ iso-27001/</span>
+      </div>
+
+      <h4>Naming Conventions</h4>
+      <div class="doc-block">
+        <ul>
+          <li>All files: <code>kebab-case</code>, no spaces or special characters</li>
+          <li>API endpoint docs: <code>verb-resource.md</code> (e.g. <code>create-user.md</code>)</li>
+          <li>Versioned docs: suffix with <code>-v{major}.md</code> when breaking changes occur</li>
+          <li>Draft files: prefix with <code>_draft-</code> until approved</li>
+        </ul>
+      </div>
+
+      <h4>Review Cycle (Sprint-aligned)</h4>
+      <div class="doc-block">
+        <p><strong>Week 1:</strong> Writer drafts based on feature spec + engineering walkthrough</p>
+        <p><strong>Week 2:</strong> SME technical review (engineering lead)</p>
+        <p><strong>Week 3:</strong> Editorial review (Documentation Manager) + UX accuracy check</p>
+        <p><strong>Week 4:</strong> Final approval + publish, aligned with sprint release</p>
+      </div>
+      <div class="tag-row" style="margin-top:1.5rem">
+        <span class="tag">Content Strategy</span><span class="tag">IA</span><span class="tag">Team Leadership</span><span class="tag">Documentation Systems</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function openModal(id) {
+    document.getElementById(id).classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal(id) {
+    document.getElementById(id).classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  // Close on overlay click
+  document.querySelectorAll('.modal-overlay').forEach(overlay => {
+    overlay.addEventListener('click', e => {
+      if (e.target === overlay) closeModal(overlay.id);
+    });
+  });
+
+  // Timeline scroll animation
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.2 });
+  document.querySelectorAll('.timeline-item').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
